@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        blockquote{
+        blockquote {
             width: 50%;
             margin: 0 auto;
             border: 1px solid #000;
@@ -14,97 +13,42 @@
             border-radius: 10px;
             background-color: cyan;
         }
-        h1{
+        h1 {
             text-align: center;
             margin-bottom: 50px;
         }
-        hr{
+        hr {
             margin-top: 20px;
         }
-        input{
+        input {
             margin-bottom: 10px;
-           
         }
-        button{
+        button {
             margin-top: 10px;
         }
-        label{
+        label {
             margin: 20px;
             width: 100px;
         }
-        #name{
+        #name, #f_name, #m_name, #email, #phone, #DOB, #address {
             margin-left: 75px;
             width: 200px;
         }
-        #f_name{
-            margin-left: 20px;
-            width: 200px;
-        }
-        #m_name{
-            margin-left: 15px;
-            width: 200px;
-        }
-        #email{
-            margin-left: 75px;
-            width: 200px;
-        }
-        #phone{
-            margin-left: 75px;
-            width: 200px;
-        }
-        #gender{
-            margin-left: 50px;
-            width: 50px;
-
-        }
-        #DOB{
-            margin-left: 40px;
-            width: 200px;
-        }
-        #address{
-            margin-left: 65px;
-            width:200px;
-        }
-        #blood_group{
+        #blood_group {
             margin-left: 33px;
-            width:100px;   
+            width: 100px;
         }
-        #department{
-            margin-left: 40px;
-            width: 50px;
-        }
-        #course{
-            margin-left: 50px;
-            width: 50px;
-       }
-        #photo{
+        #photo {
             margin-left: 80px;
         }
-
-        button{
-            margin-left: 20px;
-            margin-bottom: 72px;
-        }
-        .form {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 50%;
-            background: blue;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 10;
-        }
-        .form-data{
+        .form-data {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             border: 1px solid black;
             font-family: sans-serif;
-            font-style: bold;
+            font-weight: bold;
             font-size: 20px;
         }
     </style>
@@ -124,95 +68,97 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $blood_group = $_POST['blood_group'] ?? '';
     $department = $_POST['department'] ?? '';
     $course = $_POST['course'] ?? '';
-    
 
-    if (isset($_FILES['photo'])) {
+    if (isset($_FILES['photo']) && $_FILES['photo']['error'] == 0) {
         $photo = $_FILES['photo'];
-
-        $photo_path = "uploads/" . basename($photo['name']);
+        $upload_dir = "uploads/";
+        if (!file_exists($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+        $photo_path = $upload_dir . basename($photo['name']);
         move_uploaded_file($photo['tmp_name'], $photo_path);
     }
-
 }
 ?>
 
+<blockquote>
+    <h1>Contact Page</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+        <label for="name">Name:</label>
+        <input type="text" name="username" id="name"><br><br>
 
-    <blockquote>
-        <h1>Contact Page</h1>
-        <form action="contact.php" method="post" enctype="multipart/form-data">
-    <label for="name">Name:</label>
-    <input type="text" name="username" placeholder="Enter full name" id="name" name="name"><br><br>
+        <label for="f_name">Father's Name:</label>
+        <input type="text" name="father_name" id="f_name"><br><br>
 
-    <label for="father_name">Father's Name:</label>
-    <input type="text" name="father_name" id="f_name" name="f_name"><br><br>
+        <label for="m_name">Mother's Name:</label>
+        <input type="text" name="mother_name" id="m_name"><br><br>
 
-    <label for="mother_name">Mother's Name:</label>
-    <input type="text" name="mother_name" id="m_name" name="m_name"><br><br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email"><br><br>
 
-    <label for="email">Email:</label>
-    <input type="email" name="email" id="email" name="email"><br><br>
+        <label for="phone">Phone:</label>
+        <input type="text" name="phone" id="phone"><br><br>
 
-    <label for="phone">Phone:</label>
-    <input type="text" name="phone" id="phone" name="phone"><br><br>
+        <label>Gender:</label>
+        <input type="radio" name="gender" value="Male"> Male
+        <input type="radio" name="gender" value="Female"> Female
+        <input type="radio" name="gender" value="Other"> Other<br><br>
 
-    <label for="gender">Gender:</label>
-    <input type="radio" name="gender" id="gender" value="Male">Male
-    <input type="radio" name="gender" id="gender" value="Female">Female
-    <input type="radio" name="gender" id="gender" value="Other">Other<br><br>
+        <label for="DOB">Date of Birth:</label>
+        <input type="date" name="DOB" id="DOB"><br><br>
 
-    <label for="DOB">Date of Birth:</label>
-    <input type="date" name="DOB" id="DOB" name="DOB"><br><br>
+        <label for="address">Address:</label>
+        <input type="text" name="address" id="address"><br><br>
 
-    <label for="address">Address:</label>
-    <input type="text" name="address" placeholder="Street:   House:    Road:" id="address" name="address"><br><br>
+        <label for="blood_group">Blood Group:</label>
+        <select name="blood_group" id="blood_group">
+            <option value="" selected disabled>Select</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+        </select><br><br>
 
-    <label for="blood_group">Blood Group:</label>
-    <select name="blood_group" id="blood_group" name="blood_group" required>
-        <option value="" selected disabled>Select</option>
-        <option value="A+">A+</option>
-        <option value="A-">A-</option>
-        <option value="B+">B+</option>
-        <option value="B-">B-</option>
-        <option value="O+">O+</option>
-        <option value="O-">O-</option>
-        <option value="AB+">AB+</option>
-        <option value="AB-">AB-</option>
-    </select><br><br>
+        <label>Department:</label>
+        <input type="radio" name="department" value="CSE"> CSE
+        <input type="radio" name="department" value="BBA"> BBA
+        <input type="radio" name="department" value="BCA"> BCA<br><br>
 
-    <label for="department">Department:</label>
-    <input type="radio" name="department" id="department" value="CSE">CSE
-    <input type="radio" name="department" id="department" value="BBA">BBA
-    <input type="radio" name="department" id="department" value="BCA">BCA<br><br>
+        <label>Course:</label>
+        <input type="radio" name="course" value="C"> C
+        <input type="radio" name="course" value="C++"> C++
+        <input type="radio" name="course" value="JAVA"> JAVA
+        <input type="radio" name="course" value="AI"> AI<br><br>
 
-    <label for="course">Course:</label>
-    <input type="radio" name="course" id="course" value="C">C
-    <input type="radio" name="course" id="course" value="C++">C++
-    <input type="radio" name="course" id="course" value="JAVA">JAVA
-    <input type="radio" name="course" id="course" value="AI">AI<br><br>
+        <label for="photo">Photo:</label>
+        <input type="file" name="photo" id="photo"><br><br>
 
-    <label for="photo">Photo:</label>
-    <input type="file" name="photo" id="photo" name="photo"><br><br>
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+    </form>
+</blockquote>
 
-    <button type="submit">Submit</button>
-    <button type="reset">Reset</button>
-</form>
-    </blockquote>
-    <div class="form-data">
-      <?php 
-     echo  "<h1>User data:</h1>";
-    echo "Name: " . $username . "<br>";
-    echo "Father's Name: " . $father_name . "<br>";
-    echo "Mother's Name: " . $mother_name . "<br>";
-    echo "Email: " . $email . "<br>";
-    echo "Phone: " . $phone . "<br>";
-    echo "Gender: " . $gender . "<br>";
-    echo "Date of Birth: " . $DOB . "<br>";
-    echo "Address: " . $address . "<br>";
-    echo "Blood Group: " . $blood_group . "<br>";
-    echo "Department: " . $department . "<br>";
-    echo "Course: " . $course . "<br>";
-    echo "Photo: " . (isset($photo_path) ? $photo_path : 'No photo uploaded') . "<br>"; ?>
-    </div>
+<div class="form-data">
+    <h1>User data:</h1>
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+        <p>Name: <?= $username ?></p>
+        <p>Father's Name: <?= $father_name ?></p>
+        <p>Mother's Name: <?= $mother_name ?></p>
+        <p>Email: <?= $email ?></p>
+        <p>Phone: <?= $phone ?></p>
+        <p>Gender: <?= $gender ?></p>
+        <p>Date of Birth: <?= $DOB ?></p>
+        <p>Address: <?= $address ?></p>
+        <p>Blood Group: <?= $blood_group ?></p>
+        <p>Department: <?= $department ?></p>
+        <p>Course: <?= $course ?></p>
+        <p>Photo: <?= isset($photo_path) ? "<img src='$photo_path' width='100'>" : "No photo uploaded" ?></p>
+    <?php endif; ?>
+</div>
 
 </body>
 </html>

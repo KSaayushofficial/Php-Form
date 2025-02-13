@@ -6,16 +6,15 @@ if (!$conn){
 }
 
 if(!empty($_POST)){
-
-    $id = $_POST['id'];
     $name = $_POST['name'];
     $email = $_POST['email'];
     $address = $_POST['address'];
-    $sql = "INSERT INTO students(Id,Name,Email,Address) VALUES ('$id','$name','$email','$address')";
+    $sql = "INSERT INTO students(Name,Email,Address) VALUES ('$name','$email','$address')";
     $result = mysqli_query($conn,$sql);
 
     if($result){
-        echo "Record added successfully.";
+        // echo "Record added successfully.";
+        header("Location: index.php");
      } else{
             echo "Record not added.";
         }

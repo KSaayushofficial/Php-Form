@@ -2,7 +2,7 @@
 $conn = mysqli_connect('localhost','root','','bca');
 
 if(!$conn){
-    echo "Database not connected";
+    die("Database not connected.".mysqli_connect_error());
 };
 
 $sql = "SELECT * from students";
@@ -30,15 +30,15 @@ $result = mysqli_query($conn,$sql);
                     <th>Address</th>
                     <th>Action</th>
                 </tr>
-                <?php foreach($result as $student) {?>
+                <?php foreach($result as $key=>$student) {?>
                     <tr>
-                        <td><?=$student['Id']?></td>
+                        <td><?=$key+1?></td>
                         <td><?=$student['Name']?></td>
                         <td><?=$student['Email']?></td>
                         <td><?=$student['Address']?></td>
                         <td>
-                            <a href="./edit.php">Edit</a>
-                            <a href="./delete.php">Delete</a>
+                            <a href="./edit.php?id=<?=$student['Id']?>">Edit</a>
+                            <a href="./delete.php?id=<?=$student['Id']?>">Delete</a>
                         </td>
                     </tr>
                     <?php } ?>

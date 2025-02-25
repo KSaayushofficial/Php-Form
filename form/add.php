@@ -35,8 +35,6 @@ if(!empty($_POST)){
         <a href="add.php">Add Student</a>
         <hr>
         <form action="" method="post">
-            <label for="id">Id</label> <br>
-            <input type="text" name="id"> <br>
             <label for="name">Name</label> <br>
             <input type="text" name="name"> <br>
             <label for="email">Email</label> <br>
